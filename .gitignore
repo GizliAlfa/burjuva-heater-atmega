@@ -1,0 +1,30 @@
+# Arduino
+*.hex
+*.eep
+*.elf
+*.map
+
+# Build files
+build/
+*.o
+*.a
+
+# IDE files
+.vscode/
+.vs/
+*.code-workspace
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Temporary files
+*~
+*.swp
+*.swo
+*.tmp
+*.bak
+
+# Libraries (uncomment if you want to track them)
+# libraries/

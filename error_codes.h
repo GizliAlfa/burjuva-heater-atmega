@@ -1,0 +1,13 @@
+#ifndef ERROR_CODES_H
+#define ERROR_CODES_H
+
+enum ErrorCode {
+  ERR_NONE = 0,
+  ERR_SENSOR_NOT_READY,
+  ERR_SENSOR_DISCONNECTED,
+  ERR_OVERTEMP,
+  ERR_ADC_FAILURE,
+  ERR_UNKNOWN
+};
+
+#endif
