@@ -1,0 +1,133 @@
+{
+    "classes": [
+        {
+            "className": "MaterialManager",
+            "methods": [
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "name",
+                            "type": "QString"
+                        },
+                        {
+                            "name": "temperature",
+                            "type": "int"
+                        },
+                        {
+                            "name": "flowRate",
+                            "type": "int"
+                        },
+                        {
+                            "name": "duration",
+                            "type": "int"
+                        }
+                    ],
+                    "name": "addMaterial",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "index",
+                            "type": "int"
+                        }
+                    ],
+                    "name": "removeMaterial",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "index",
+                            "type": "int"
+                        },
+                        {
+                            "name": "name",
+                            "type": "QString"
+                        },
+                        {
+                            "name": "temperature",
+                            "type": "int"
+                        },
+                        {
+                            "name": "flowRate",
+                            "type": "int"
+                        },
+                        {
+                            "name": "duration",
+                            "type": "int"
+                        }
+                    ],
+                    "name": "updateMaterial",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "arguments": [
+                        {
+                            "name": "index",
+                            "type": "int"
+                        }
+                    ],
+                    "name": "selectMaterial",
+                    "returnType": "void"
+                }
+            ],
+            "object": true,
+            "properties": [
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 0,
+                    "name": "materials",
+                    "notify": "materialsChanged",
+                    "read": "materials",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "QVariantList",
+                    "user": false
+                },
+                {
+                    "constant": false,
+                    "designable": true,
+                    "final": false,
+                    "index": 1,
+                    "name": "selectedMaterial",
+                    "notify": "selectedMaterialChanged",
+                    "read": "selectedMaterial",
+                    "required": false,
+                    "scriptable": true,
+                    "stored": true,
+                    "type": "QVariantMap",
+                    "user": false
+                }
+            ],
+            "qualifiedClassName": "MaterialManager",
+            "signals": [
+                {
+                    "access": "public",
+                    "name": "materialsChanged",
+                    "returnType": "void"
+                },
+                {
+                    "access": "public",
+                    "name": "selectedMaterialChanged",
+                    "returnType": "void"
+                }
+            ],
+            "superClasses": [
+                {
+                    "access": "public",
+                    "name": "QObject"
+                }
+            ]
+        }
+    ],
+    "inputFile": "materialmanager.h",
+    "outputRevision": 68
+}

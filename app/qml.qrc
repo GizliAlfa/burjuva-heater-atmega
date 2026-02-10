@@ -1,0 +1,47 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>OnScreenKeyboard.qml</file>
+        <file>DashboardPage.qml</file>
+        <file>ProcessPage.qml</file>
+        <file>DataLogPage.qml</file>
+        <file>MaterialPage.qml</file>
+        <file>SetupPage.qml</file>
+        <file>SettingsPage.qml</file>
+        <file>resimler/main-device.png</file>
+        <file>resimler/asama1.svg</file>
+        <file>resimler/asama2.svg</file>
+        <file>resimler/arttir.svg</file>
+        <file>resimler/azalt.svg</file>
+        <file>resimler/asama1-green.svg</file>
+        <file>resimler/asama2-green.svg</file>
+        <file>resimler/arttir-green.svg</file>
+        <file>resimler/azalt-green.svg</file>
+        <file>resimler/dashboard.svg</file>
+        <file>resimler/dashboard-green.svg</file>
+        <file>resimler/setup.svg</file>
+        <file>resimler/setup-green.svg</file>
+        <file>resimler/settings.svg</file>
+        <file>resimler/settings-green.svg</file>
+        <file>resimler/material.svg</file>
+        <file>resimler/material-green.svg</file>
+        <file>resimler/data-log.svg</file>
+        <file>resimler/data-log-green.svg</file>
+        <file>resimler/process.svg</file>
+        <file>resimler/process-green.svg</file>
+        <file>resimler/alarm.svg</file>
+        <file>resimler/warning.svg</file>
+        <file>resimler/running.svg</file>
+        <file>resimler/idle.svg</file>
+        <file>resimler/set-edildi.svg</file>
+        <file>resimler/geri.svg</file>
+        <file>resimler/logsilme.svg</file>
+        <file>resimler/sicaklik.svg</file>
+        <file>resimler/flow.svg</file>
+        <file>resimler/clock.svg</file>
+        <file>resimler/edit.svg</file>
+        <file>resimler/turkce.svg</file>
+        <file>resimler/english.svg</file>
+        <file>resimler/soru.svg</file>
+    </qresource>
+</RCC>
