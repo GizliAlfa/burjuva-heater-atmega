@@ -377,6 +377,7 @@ release/qrc_qml.cpp: qml.qrc \
 		OnScreenKeyboard.qml \
 		DashboardPage.qml \
 		MaterialPage.qml \
+		ServisPage.qml \
 		SetupPage.qml \
 		SettingsPage.qml \
 		main.qml \
@@ -395,6 +396,7 @@ release/qrc_qml.cpp: qml.qrc \
 		resimler/flow.svg \
 		resimler/dashboard-green.svg \
 		resimler/data-log.svg \
+		resimler/servis.svg \
 		resimler/clock.svg \
 		resimler/arttir.svg \
 		resimler/main-device.png \

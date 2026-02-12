@@ -8,6 +8,7 @@
         <file>MaterialPage.qml</file>
         <file>SetupPage.qml</file>
         <file>SettingsPage.qml</file>
+        <file>ServisPage.qml</file>
         <file>resimler/main-device.png</file>
         <file>resimler/asama1.svg</file>
         <file>resimler/asama2.svg</file>
@@ -43,5 +44,6 @@
         <file>resimler/turkce.svg</file>
         <file>resimler/english.svg</file>
         <file>resimler/soru.svg</file>
+        <file>resimler/servis.svg</file>
     </qresource>
 </RCC>

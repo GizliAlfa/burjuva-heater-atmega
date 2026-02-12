@@ -538,4 +538,196 @@ Item {
             default: return ""
         }
     }
+    
+    // Servis butonu - Sağ alt köşe
+    Button {
+        id: serviceButton
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        anchors.rightMargin: 20
+        anchors.bottomMargin: 20
+        width: 80
+        height: 80
+        hoverEnabled: false
+        
+        background: Rectangle {
+            color: "transparent"
+        }
+        
+        contentItem: Image {
+            anchors.centerIn: parent
+            width: parent.width * 0.75
+            height: parent.height * 0.75
+            source: "resimler/servis.svg"
+            fillMode: Image.PreserveAspectFit
+            smooth: true
+            antialiasing: true
+        }
+        
+        onClicked: {
+            passwordDialog.open()
+        }
+    }
+    
+    // Şifre Dialogu
+    Dialog {
+        id: passwordDialog
+        title: mainWindow.currentLanguage === "tr" ? "Servis Şifresi" : "Service Password"
+        modal: true
+        anchors.centerIn: parent
+        width: 450
+        height: 320
+        
+        background: Rectangle {
+            color: "#34495e"
+            radius: 10
+            border.color: "#3498db"
+            border.width: 2
+        }
+        
+        header: Rectangle {
+            width: parent.width
+            height: 60
+            color: "#2c3e50"
+            radius: 10
+            
+            Text {
+                anchors.centerIn: parent
+                text: passwordDialog.title
+                font.pixelSize: 20
+                font.bold: true
+                color: "#ecf0f1"
+            }
+        }
+        
+        contentItem: ColumnLayout {
+            spacing: 15
+            anchors.margins: 10
+            
+            Text {
+                Layout.alignment: Qt.AlignHCenter
+                text: mainWindow.currentLanguage === "tr" ? "Lütfen şifre giriniz:" : "Please enter password:"
+                font.pixelSize: 16
+                color: "#ecf0f1"
+            }
+            
+            TextField {
+                id: passwordField
+                Layout.fillWidth: true
+                Layout.preferredHeight: 50
+                echoMode: TextInput.Password
+                font.pixelSize: 18
+                placeholderText: "********"
+                horizontalAlignment: Text.AlignHCenter
+                
+                background: Rectangle {
+                    color: "#2c3e50"
+                    radius: 8
+                    border.color: passwordField.activeFocus ? "#3498db" : "#7f8c8d"
+                    border.width: 2
+                }
+                
+                color: "#ecf0f1"
+                
+                Keys.onReturnPressed: {
+                    if (passwordField.text === "burjuva") {
+                        passwordDialog.close()
+                        passwordField.text = ""
+                        stackView.push("ServisPage.qml", {
+                            mainWindow: mainWindow,
+                            stackView: stackView
+                        })
+                    } else {
+                        errorText.text = mainWindow.currentLanguage === "tr" ? "Hatalı şifre!" : "Wrong password!"
+                        passwordField.text = ""
+                    }
+                }
+            }
+            
+            Rectangle {
+                Layout.fillWidth: true
+                Layout.preferredHeight: 35
+                color: "transparent"
+                
+                Text {
+                    id: errorText
+                    anchors.centerIn: parent
+                    text: ""
+                    font.pixelSize: 14
+                    font.bold: true
+                    color: "#e74c3c"
+                    visible: text !== ""
+                }
+            }
+            
+            RowLayout {
+                Layout.alignment: Qt.AlignHCenter
+                spacing: 20
+                
+                Button {
+                    text: mainWindow.currentLanguage === "tr" ? "Giriş" : "Login"
+                    Layout.preferredWidth: 120
+                    Layout.preferredHeight: 45
+                    
+                    background: Rectangle {
+                        color: parent.pressed ? "#27ae60" : "#2ecc71"
+                        radius: 8
+                    }
+                    
+                    contentItem: Text {
+                        text: parent.text
+                        font.pixelSize: 16
+                        color: "#ecf0f1"
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                    }
+                    
+                    onClicked: {
+                        if (passwordField.text === "burjuva") {
+                            passwordDialog.close()
+                            passwordField.text = ""
+                            stackView.push("ServisPage.qml", {
+                                mainWindow: mainWindow,
+                                stackView: stackView
+                            })
+                        } else {
+                            errorText.text = mainWindow.currentLanguage === "tr" ? "Hatalı şifre!" : "Wrong password!"
+                            passwordField.text = ""
+                        }
+                    }
+                }
+                
+                Button {
+                    text: mainWindow.currentLanguage === "tr" ? "İptal" : "Cancel"
+                    Layout.preferredWidth: 120
+                    Layout.preferredHeight: 45
+                    
+                    background: Rectangle {
+                        color: parent.pressed ? "#c0392b" : "#e74c3c"
+                        radius: 8
+                    }
+                    
+                    contentItem: Text {
+                        text: parent.text
+                        font.pixelSize: 16
+                        color: "#ecf0f1"
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                    }
+                    
+                    onClicked: {
+                        passwordDialog.close()
+                        passwordField.text = ""
+                        errorText.text = ""
+                    }
+                }
+            }
+        }
+        
+        onOpened: {
+            passwordField.text = ""
+            errorText.text = ""
+            passwordField.forceActiveFocus()
+        }
+    }
 }
