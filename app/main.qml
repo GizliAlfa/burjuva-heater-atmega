@@ -12,6 +12,24 @@ ApplicationWindow {
     
     Component.onCompleted: {
         Qt.application.overrideCursor(Qt.BlankCursor)
+        
+        // UART bağlantısını kontrol et
+        Qt.callLater(checkUartConnection)
+    }
+    
+    // UART bağlantı kontrolü
+    function checkUartConnection() {
+        if (typeof serialConnection !== 'undefined' && serialConnection) {
+            if (!serialConnection.isOpen()) {
+                console.log("UART not connected! Opening Hardware Error dialog...")
+                hardwareErrorDialog.open()
+            } else {
+                console.log("UART connected:", serialConnection.getCurrentPort())
+            }
+        } else {
+            console.log("SerialConnection not available! Opening Hardware Error dialog...")
+            hardwareErrorDialog.open()
+        }
     }
     
     // Notification settings
@@ -21,6 +39,7 @@ ApplicationWindow {
     property string debugConsole: "Program started" // Debug console output
     property string currentLanguage: "tr" // "tr" or "en"
     property string currentTime: "00:00:00" // Current time display
+    property int infrastructure: 0 // 0: Atmega, 1: Pilot
     
     // Status LED color function
     function getStatusLEDColor(type) {
@@ -925,4 +944,125 @@ ApplicationWindow {
     } // GridLayout kapanışı
     } // Item kapanışı
 } // Component kapanışı
+
+    // Hardware Error Dialog
+    Dialog {
+        id: hardwareErrorDialog
+        modal: true
+        closePolicy: Popup.NoAutoClose  // Kapatma butonunu devre dışı bırak
+        width: 600
+        height: 400
+        anchors.centerIn: parent
+        
+        background: Rectangle {
+            color: "#2c3e50"
+            radius: 15
+            border.color: "#e74c3c"
+            border.width: 3
+        }
+        
+        ColumnLayout {
+            anchors.fill: parent
+            anchors.margins: 30
+            spacing: 20
+            
+            // Error Icon
+            Rectangle {
+                Layout.alignment: Qt.AlignHCenter
+                width: 100
+                height: 100
+                radius: 50
+                color: "#e74c3c"
+                
+                Text {
+                    anchors.centerIn: parent
+                    text: "!"
+                    font.pixelSize: 72
+                    font.bold: true
+                    color: "#ecf0f1"
+                }
+            }
+            
+            // Error Title
+            Text {
+                Layout.fillWidth: true
+                text: "HARDWARE ERROR"
+                font.pixelSize: 32
+                font.bold: true
+                color: "#e74c3c"
+                horizontalAlignment: Text.AlignHCenter
+            }
+            
+            // Error Message
+            Text {
+                Layout.fillWidth: true
+                text: mainWindow.currentLanguage === "tr" ? 
+                      "UART bağlantısı bulunamadı!\nLütfen servis modundan bağlantı yapınız." :
+                      "UART connection not found!\nPlease configure connection in service mode."
+                font.pixelSize: 18
+                color: "#ecf0f1"
+                horizontalAlignment: Text.AlignHCenter
+                wrapMode: Text.WordWrap
+                Layout.preferredHeight: 80
+            }
+            
+            Item { Layout.fillHeight: true }
+            
+            // Service Button
+            Button {
+                Layout.alignment: Qt.AlignHCenter
+                Layout.preferredWidth: 200
+                Layout.preferredHeight: 80
+                hoverEnabled: false
+                
+                background: Rectangle {
+                    color: "#e67e22"
+                    radius: 10
+                    border.color: "#d35400"
+                    border.width: 2
+                }
+                
+                contentItem: RowLayout {
+                    spacing: 10
+                    
+                    Image {
+                        Layout.preferredWidth: 40
+                        Layout.preferredHeight: 40
+                        source: "resimler/servis.svg"
+                        fillMode: Image.PreserveAspectFit
+                        smooth: true
+                        antialiasing: true
+                    }
+                    
+                    Text {
+                        text: mainWindow.currentLanguage === "tr" ? "SERVİS" : "SERVICE"
+                        font.pixelSize: 24
+                        font.bold: true
+                        color: "#ecf0f1"
+                    }
+                }
+                
+                onClicked: {
+                    hardwareErrorDialog.close()
+                    stackView.push("ServisPage.qml", {
+                        mainWindow: mainWindow,
+                        stackView: stackView
+                    })
+                }
+            }
+        }
+        
+        // UART bağlantısını periyodik kontrol et
+        Timer {
+            interval: 1000
+            running: hardwareErrorDialog.visible
+            repeat: true
+            onTriggered: {
+                if (typeof serialConnection !== 'undefined' && serialConnection && serialConnection.isOpen()) {
+                    console.log("UART connection established! Closing Hardware Error dialog...")
+                    hardwareErrorDialog.close()
+                }
+            }
+        }
+    }
 } // ApplicationWindow kapanışı

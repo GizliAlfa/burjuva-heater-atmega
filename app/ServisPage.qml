@@ -18,11 +18,13 @@ Item {
         
         property int debugMode: 0
         property int uartPort: 0
+        property int infrastructure: 0  // 0: Atmega, 1: Pilot
     }
     
     Component.onCompleted: {
         // Kaydedilmiş ayarları yükle
         demoCombo.currentIndex = servisSettings.debugMode;
+        infrastructureCombo.currentIndex = servisSettings.infrastructure;
         updatePortList();
         // Port listesi hazırlandıktan sonra kaydedilmiş portu seç
         Qt.callLater(function() {
@@ -341,6 +343,67 @@ Item {
                             onClicked: {
                                 terminalDialog.open()
                             }
+                        }
+                    }
+                    
+                    // Altyapı Section
+                    Text {
+                        text: mainWindow.currentLanguage === "tr" ? "Altyapı" : "Infrastructure"
+                        font.pixelSize: 28
+                        font.bold: true
+                        color: "#ecf0f1"
+                        Layout.topMargin: 20
+                    }
+                    
+                    ComboBox {
+                        id: infrastructureCombo
+                        Layout.fillWidth: true
+                        Layout.preferredHeight: 60
+                        font.pixelSize: 18
+                        
+                        model: ListModel {
+                            ListElement { textTr: "1. Atmega"; textEn: "1. Atmega" }
+                            ListElement { textTr: "2. Pilot"; textEn: "2. Pilot" }
+                        }
+                        
+                        onCurrentIndexChanged: {
+                            servisSettings.infrastructure = currentIndex;
+                            mainWindow.infrastructure = currentIndex;
+                            console.log("Infrastructure changed to:", currentIndex === 0 ? "Atmega" : "Pilot");
+                        }
+                        
+                        delegate: ItemDelegate {
+                            width: infrastructureCombo.width
+                            height: 50
+                            
+                            contentItem: Text {
+                                text: mainWindow.currentLanguage === "tr" ? model.textTr : model.textEn
+                                color: "#ecf0f1"
+                                font.pixelSize: 16
+                                verticalAlignment: Text.AlignVCenter
+                            }
+                            
+                            background: Rectangle {
+                                color: highlighted ? "#27ae60" : "#2c3e50"
+                            }
+                        }
+                        
+                        background: Rectangle {
+                            color: "#2c3e50"
+                            radius: 8
+                            border.color: "#3498db"
+                            border.width: 1
+                        }
+                        
+                        contentItem: Text {
+                            text: infrastructureCombo.currentIndex >= 0 ? 
+                                  (mainWindow.currentLanguage === "tr" ? 
+                                   infrastructureCombo.model.get(infrastructureCombo.currentIndex).textTr : 
+                                   infrastructureCombo.model.get(infrastructureCombo.currentIndex).textEn) : ""
+                            font: infrastructureCombo.font
+                            color: "#ecf0f1"
+                            verticalAlignment: Text.AlignVCenter
+                            leftPadding: 10
                         }
                     }
                     
