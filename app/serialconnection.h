@@ -14,14 +14,14 @@ public:
     explicit SerialConnection(QObject *parent = nullptr);
     ~SerialConnection();
     
-    bool openPort(const QString &portName);
-    void closePort();
-    bool isOpen() const;
+    Q_INVOKABLE bool openPort(const QString &portName);
+    Q_INVOKABLE void closePort();
+    Q_INVOKABLE bool isOpen() const;
     
-    void sendCommand(const QString &command);
-    QStringList availablePorts() const;
+    Q_INVOKABLE void sendCommand(const QString &command);
+    Q_INVOKABLE QStringList availablePorts() const;
     
-    QString getCurrentPort() const;
+    Q_INVOKABLE QString getCurrentPort() const;
 
 signals:
     void dataReceived(const QString &data);

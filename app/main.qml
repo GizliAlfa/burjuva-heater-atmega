@@ -16,10 +16,23 @@ ApplicationWindow {
     
     // Notification settings
     property string notificationMode: "off" // "off", "bottomRight", "statusBar", "both"
-    property bool demoMode: true // Demo mode on/off
+    property bool demoMode: false // Demo mode on/off
     property string currentLogType: "idle" // Current status LED type
     property string debugConsole: "Program started" // Debug console output
     property string currentLanguage: "tr" // "tr" or "en"
+    property string currentTime: "00:00:00" // Current time display
+    
+    // Status LED color function
+    function getStatusLEDColor(type) {
+        switch(type) {
+            case "alarm": return "#e74c3c"      // Kırmızı
+            case "running": return "#2ecc71"    // Yeşil
+            case "idle": return "#95a5a6"       // Gri
+            case "warning": return "#95a5a6"    // Gri (varsayılan)
+            case "setting": return "#95a5a6"    // Gri (varsayılan)
+            default: return "#95a5a6"
+        }
+    }
     
     // Global Log Model
     ListModel {
@@ -57,8 +70,8 @@ ApplicationWindow {
             
             // Update status LED
             mainWindow.currentLogType = randomType
-           // mainWindow.debugConsole = "Log added - Type: " + randomType + " Color: " + getStatusLEDColor(randomType)
-            console.log("New log added - Type:", randomType, "LED Color:", getStatusLEDColor(randomType))
+           // mainWindow.debugConsole = "Log added - Type: " + randomType + " Color: " + mainWindow.getStatusLEDColor(randomType)
+            console.log("New log added - Type:", randomType, "LED Color:", mainWindow.getStatusLEDColor(randomType))
             
             // Maksimum 100 kayıt tut
             if (globalLogModel.count > 100) {
@@ -74,7 +87,7 @@ ApplicationWindow {
         repeat: true
         onTriggered: {
             var now = new Date()
-            currentTimeValue.text = Qt.formatTime(now, "HH:mm:ss")
+            mainWindow.currentTime = Qt.formatTime(now, "HH:mm:ss")
         }
     }
     
@@ -128,17 +141,6 @@ ApplicationWindow {
         id: mainPage
         
         Item {
-        
-        function getStatusLEDColor(type) {
-            switch(type) {
-                case "alarm": return "#e74c3c"      // Kırmızı
-                case "running": return "#2ecc71"    // Yeşil
-                case "idle": return "#95a5a6"       // Gri
-                case "warning": return "#95a5a6"    // Gri (varsayılan)
-                case "setting": return "#95a5a6"    // Gri (varsayılan)
-                default: return "#95a5a6"
-            }
-        }
         
         GridLayout {
             anchors.fill: parent
@@ -259,15 +261,11 @@ ApplicationWindow {
                     
                     Text {
                         id: currentTimeValue
-                        text: "00:00:00"
+                        text: mainWindow.currentTime
                         color: "white"
                         font.pixelSize: 16
                         font.bold: true
                         anchors.verticalCenter: parent.verticalCenter
-                        Component.onCompleted: {
-                            var now = new Date()
-                            text = Qt.formatTime(now, "HH:mm:ss")
-                        }
                     }
                     
                     Text {

@@ -1,6 +1,7 @@
 QT       += core gui quick qml serialport svg
 
 CONFIG += c++17
+CONFIG += console
 CONFIG += qmltypes
 
 QML_IMPORT_NAME = com.burjuva.heater
